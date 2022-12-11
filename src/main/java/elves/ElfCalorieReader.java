@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ElfCalorieReader {
 
@@ -14,20 +16,46 @@ public class ElfCalorieReader {
         this.reader = reader;
     }
 
-    public List<Elf> readCalories() throws IOException {
+    private String nextLine = "";
 
-        //BufferedReader = stream of lines of text
+    public List<Elf> readElves() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(reader);
-
         List<Elf> elfList = new ArrayList<>();
 
-        for ( String nextLine = bufferedReader.readLine();
-              nextLine != null && !"".equals(nextLine);
-              nextLine = bufferedReader.readLine()) {
-
-            elfList.add(new Elf(Integer.parseInt(nextLine)));
+        while (hasMoreElves(bufferedReader)) {
+            elfList.add(readNextElf(bufferedReader));
         }
-
         return elfList;
+    }
+
+
+    private boolean hasMoreElves(BufferedReader bufferedReader) throws IOException {
+        nextLine = bufferedReader.readLine();
+        return nextLine != null && !"".equals(nextLine);
+    }
+
+    private Elf readNextElf(BufferedReader bufferedReader) throws IOException {
+        List<Integer> listOfCalories = new ArrayList<>();
+        readAllCaloriesForOneElf(bufferedReader, listOfCalories);
+        return new Elf(listOfCalories.toArray(new Integer[0]));
+    }
+
+    private void readAllCaloriesForOneElf(BufferedReader bufferedReader, List<Integer> listOfCalories) throws IOException {
+        for (; nextLine != null && !nextLine.equals(""); //has calorie value
+             nextLine = bufferedReader.readLine()) {
+            listOfCalories.add(Integer.parseInt(nextLine));
+        }
+    }
+
+
+    public int getElfWithLargestTotalCalories() throws IOException {
+        List<Elf> elfList = readElves();
+        TreeMap<Integer, Elf> ranking = new TreeMap<>();
+        int totalCalories = 0;
+        for(Elf elf: elfList){
+            totalCalories = elf.getTotalCalories();
+            ranking.put(totalCalories, elf);
+        }
+        return ranking.lastKey();
     }
 }
