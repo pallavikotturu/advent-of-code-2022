@@ -22,8 +22,6 @@ for inputLine in inputFileLines:
     secondHalf = inputLine[middle:len(inputLine)]
 
     for character in set(firstHalf):
-        # print(firstHalf + " " + secondHalf + " " + character + " " + str(getPriorityNumber(character)))
         if secondHalf.__contains__(character) : totalPrioritySum += getPriorityNumber(character)
-        # if secondHalf.__contains__(character) : print(firstHalf + " " + secondHalf + " " + character + " " + str(getPriorityNumber(character)))
 
 print(totalPrioritySum)
