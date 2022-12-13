@@ -3,10 +3,7 @@ package elves;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ElfCalorieReader {
 
@@ -48,7 +45,7 @@ public class ElfCalorieReader {
     }
 
 
-    public int getElfWithLargestTotalCalories() throws IOException {
+    public int getOrderedCalories() throws IOException {
         List<Elf> elfList = readElves();
         TreeMap<Integer, Elf> ranking = new TreeMap<>();
         int totalCalories = 0;
@@ -56,6 +53,12 @@ public class ElfCalorieReader {
             totalCalories = elf.getTotalCalories();
             ranking.put(totalCalories, elf);
         }
-        return ranking.lastKey();
+        int sum = 0;
+        List<Integer> calorieList = new ArrayList<>();
+        for (Integer calorieCount : ranking.descendingKeySet()) {
+            sum += calorieCount;
+            calorieList.add(calorieCount);
+        }
+        return calorieList.get(0) + calorieList.get(1) + calorieList.get(2);
     }
 }

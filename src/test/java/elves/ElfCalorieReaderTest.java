@@ -1,7 +1,6 @@
 package elves;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
@@ -51,8 +50,6 @@ public class ElfCalorieReaderTest {
     @Test
     void testGetElfWithLargestTotalCalories() throws Exception{
         classUnderTest = new ElfCalorieReader(new FileReader("inputFile.txt"));
-        Assertions.assertEquals(68923, classUnderTest.getElfWithLargestTotalCalories());
-
-
+        Assertions.assertEquals(200044, classUnderTest.getOrderedCalories());
     }
 }
