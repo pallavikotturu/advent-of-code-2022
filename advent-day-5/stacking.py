@@ -3,7 +3,8 @@
 # follow list of instructions and move crates across 9 different stacks
 # for elves to work on
 
-inputFile = open('instructions-jeff.txt', 'r')
+# inputFile = open('instructions-jeff.txt', 'r')
+inputFile = open('instructions-pallavi.txt', 'r')
 inputFileLines = inputFile.readlines()
 
 jeffStacks = [
@@ -18,7 +19,19 @@ jeffStacks = [
     ['R', 'D', 'L', 'Q', 'J', 'Z', 'M', 'T']
 ]
 
-stacks = jeffStacks
+pallaviStacks = [
+    ['B', 'W', 'N'],
+    ['L', 'Z', 'S', 'P', 'T', 'D', 'M', 'B'],
+    ['Q', 'H', 'Z', 'W', 'R'],
+    ['W', 'D', 'V', 'J', 'Z', 'R'],
+    ['S', 'H', 'M', 'B'],
+    ['L','G', 'N', 'J', 'H', 'V', 'P', 'B'],
+    ['J', 'Q', 'Z', 'F', 'H', 'D', 'L', 'S'],
+    ['W', 'S', 'F', 'J', 'G', 'Q', 'B'],
+    ['Z', 'W', 'M', 'S', 'C', 'D', 'J']
+]
+
+stacks = pallaviStacks
 
 # split each line using delimiter ' '
 # ignore all words.
