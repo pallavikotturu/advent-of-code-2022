@@ -28,11 +28,10 @@ stacks = jeffStacks
 # within the function, we pop and then append based on location values -1 from stacks
 
 def moveCrates(quantity, startStack, finalStack):
-    times = 1
-    while times <= quantity:
-        crateToMove = stacks[startStack-1].pop()
-        stacks[finalStack-1].append(crateToMove)
-        times += 1
+    subStack = stacks[startStack-1][-quantity:]
+    stacks[startStack-1] = stacks[startStack-1][:-quantity]
+    for c in subStack:
+        stacks[finalStack-1].append(c)
 
 
 for eachLine in inputFileLines:
@@ -46,6 +45,7 @@ for eachLine in inputFileLines:
 
 finalTopCrates = ''
 for stack in stacks:
-    finalTopCrates += str(stack[len(stack) - 1])
+    finalTopCrates += stack[len(stack) - 1]
 
 print(finalTopCrates)
+
