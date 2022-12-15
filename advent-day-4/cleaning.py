@@ -1,11 +1,12 @@
 # if the digits that fall within the second half are encompassed within the first half, then increment containment counter
-# inputFile = open('cleaning-input-pallavi.txt', 'r')
-inputFile = open('cleaning-input-jeff.txt', 'r')
+inputFile = open('cleaning-input-pallavi.txt', 'r')
+# inputFile = open('cleaning-input-jeff.txt', 'r')
 inputFileLines = inputFile.readlines()
 
 def contains(lower1, upper1, lower2, upper2):
     # if 3rd number >= first number and 4th number <= second number then increment containsFully
-    if lower2 >= lower1 and upper2 <= upper1 :
+    if lower2 >= lower1 and upper2 <= upper1 : #coincides - part 1
+    # if lower2 >= lower1 and lower2 <= upper1 : #overlaps - part 2
         return True
 
 
