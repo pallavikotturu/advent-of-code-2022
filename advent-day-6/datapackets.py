@@ -1,5 +1,6 @@
 # for every substring [x,y] if any character in that substring is repeated, move to [x++, y++]
 inputFile = open('datapackets-input-jeff.txt', 'r')
+inputFile = open('datapackets-input-pallavi.txt', 'r')
 input = inputFile.readlines()[0]
 
 # created for use case of string length four
