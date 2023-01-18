@@ -9,58 +9,84 @@ currentPlace = root
 
 def parentDirectoryOf(start, lookingFor):
     for key, value in start.items():
-        print(key, value)
+        # print(key, value)
         if value == lookingFor:
             return start
         elif isinstance(value, int):
             pass
         else:
-            return parentDirectoryOf(value, lookingFor)
-
-tree = dict();
-tree["b.txt"] = 14848514
-tree["c.dat"] = 8504156
-
-tree["a"] = dict()
-tree["a"]["f"] = 29116
-tree["a"]["g"] = 2557
-tree["a"]["h.lst"] = 62596
-tree["a"]["e"] = dict()
-tree["a"]["e"]["i"] = 584
-
-d = dict()
-tree["d"] = d
-tree["d"]["j"] = 4060174
-tree["d"]["d.log"] = 8033020
-tree["d"]["d.ext"] = 5626152
-tree["d"]["k"] = 7214296
-print(tree)
-
-print(parentDirectoryOf(tree, d))
-exit(1)
+            result = parentDirectoryOf(value, lookingFor)
+            if result!=None :
+                return result
+            else:
+                pass
+    return None
 
 # interpret/map the input line to action
 # interpret a line of the file
 # to create a datastructure (tree of some sort) to store the heirarchy of that directory structure
+state = "command" # or listing
 for fileLine in inputFileLines:
     if fileLine == '$ cd /\n':
+        state = "command"
         pass
     elif fileLine == '$ cd ..\n':
+        state = "command"
         currentPlace = parentDirectoryOf(root, currentPlace)
-
     elif fileLine[0:4] == '$ cd':
+        state = "command"
         temp = dict()
         currentPlace[fileLine[5:len(fileLine)-1]] = temp
         currentPlace = temp
-    elif fileLine[0:3] == '$ ls':
+    elif fileLine[0:4] == '$ ls':
+        state = "listing"
         pass
-    print(root)
-# store into datastructure
-#need to store the contents into the tree
+    elif state == "listing":
+        (size, name) = fileLine.strip().split(" ")
+        if (size!="dir"):
+            currentPlace[name] = int(size)
 
-# depth first algorithm to walk the tree to find and store sizes of directories with files <= 100k size
-#function that evaluates whether size of directory <= 100000
+print(root)
 
-# sum them all up
+# store into datastructure - done
+# need to store the contents into the tree - done
+
+# function that evaluates whether size of directory <= 100000
+def getSizeOfDirectory(dir):
+
+    totalSize = 0
+    for key in dir:
+        isItADirectory = isinstance(dir[key], dict)
+        if(isItADirectory):
+            sizeOfChild = getSizeOfDirectory(dir[key])
+            totalSize = totalSize + sizeOfChild
+        else:
+            #this is for non-dictionary items
+            totalSize = totalSize + dir[key]
+    return totalSize
 
 
+listOfMatchingDirectories = []
+def findSmallDirectories(dir):
+# walk child node of the dir
+    for child in dir:
+        print(child)
+        # if the node is a directory
+        if isinstance(dir[child], dict):
+            print("isDict")
+            # check its size
+            childSize = getSizeOfDirectory(dir[child])
+             # if it's size is > 100k
+            if (childSize <= 100000):
+                # add to a list of matching directories
+                listOfMatchingDirectories.append(childSize)
+            findSmallDirectories(dir[child])
+
+findSmallDirectories(root)
+print(listOfMatchingDirectories)
+
+totalSize = 0
+for size in listOfMatchingDirectories:
+    totalSize += size
+
+print(totalSize)
