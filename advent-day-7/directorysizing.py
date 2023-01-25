@@ -2,6 +2,7 @@
 
 # to read the input file
 inputFile = open('example-input.txt', 'r')
+inputFile = open('directory-list-pallavi.txt', 'r')
 inputFileLines = inputFile.readlines()
 
 root = dict()
