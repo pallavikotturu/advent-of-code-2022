@@ -2,8 +2,7 @@
 
 # to read the input file
 inputFile = open('example-input.txt', 'r')
-inputFile = open('directory-list-pallavi.txt', 'r')
-inputFile = open('pallavi-input-day-2.txt', 'r')
+
 
 inputFileLines = inputFile.readlines()
 
@@ -102,10 +101,11 @@ print(totalSize)
 
 # plain text logic:
 # run the new input file commands through above code to generate directory size
-print(getSizeOfDirectory(root)) #pallavi: 41072511
+totalFileSystemSize = getSizeOfDirectory(root) #pallavi: 41072511
+print(totalFileSystemSize)
 
 # set local int to 70 MILLION - size of root directory
-delta_pallavi = 30000000 - (70000000 - 41072511)
+delta_pallavi = 30000000 - (70000000 - totalFileSystemSize)
 print(delta_pallavi) # need a directory that frees up at least 1072511
 
 listOfAcceptableDirectories = []
