@@ -3,6 +3,8 @@
 # to read the input file
 inputFile = open('example-input.txt', 'r')
 inputFile = open('directory-list-pallavi.txt', 'r')
+inputFile = open('pallavi-input-day-2.txt', 'r')
+
 inputFileLines = inputFile.readlines()
 
 root = dict()
@@ -22,6 +24,26 @@ def parentDirectoryOf(start, lookingFor):
             else:
                 pass
     return None
+
+
+# store into datastructure - done
+# need to store the contents into the tree - done
+
+# function that evaluates whether size of directory <= 100000
+def getSizeOfDirectory(dir):
+
+    totalSize = 0
+    for key in dir:
+        isItADirectory = isinstance(dir[key], dict)
+        if(isItADirectory):
+            sizeOfChild = getSizeOfDirectory(dir[key])
+            totalSize = totalSize + sizeOfChild
+        else:
+            #this is for non-dictionary items
+            totalSize = totalSize + dir[key]
+    return totalSize
+
+
 
 # interpret/map the input line to action
 # interpret a line of the file
@@ -49,23 +71,6 @@ for fileLine in inputFileLines:
 
 print(root)
 
-# store into datastructure - done
-# need to store the contents into the tree - done
-
-# function that evaluates whether size of directory <= 100000
-def getSizeOfDirectory(dir):
-
-    totalSize = 0
-    for key in dir:
-        isItADirectory = isinstance(dir[key], dict)
-        if(isItADirectory):
-            sizeOfChild = getSizeOfDirectory(dir[key])
-            totalSize = totalSize + sizeOfChild
-        else:
-            #this is for non-dictionary items
-            totalSize = totalSize + dir[key]
-    return totalSize
-
 
 listOfMatchingDirectories = []
 def findSmallDirectories(dir):
@@ -91,3 +96,39 @@ for size in listOfMatchingDirectories:
     totalSize += size
 
 print(totalSize)
+
+
+# PART TWO - DAY 7
+
+# plain text logic:
+# run the new input file commands through above code to generate directory size
+print(getSizeOfDirectory(root)) #pallavi: 41072511
+
+# set local int to 70 MILLION - size of root directory
+delta_pallavi = 30000000 - (70000000 - 41072511)
+print(delta_pallavi) # need a directory that frees up at least 1072511
+
+listOfAcceptableDirectories = []
+def findSizableDirectories(dir):
+    # walk child node of the dir
+    for child in dir:
+        print(child)
+        # if the node is a directory
+        if isinstance(dir[child], dict):
+            print("isDict")
+            # check its size
+            childSize = getSizeOfDirectory(dir[child])
+            # if it's size is > 100k
+            if (childSize >= delta_pallavi):
+                # add to a list of matching directories
+                listOfAcceptableDirectories.append(childSize)
+            findSizableDirectories(dir[child])
+
+findSizableDirectories(root)
+print(min(listOfAcceptableDirectories))
+
+# traverse through tree to collect list of directories whose size is >= delta (above local variable)
+
+
+# get smallest sized directory
+
