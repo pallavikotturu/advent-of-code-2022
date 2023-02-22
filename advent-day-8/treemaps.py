@@ -55,3 +55,67 @@ for treerow in range(0, len(forest)):
             tally = tally + 1
 
 print (tally)
+
+#forest = [[3, 0, 3, 7, 3], [2, 5, 5, 1, 2], [6, 5, 3, 3, 2], [3, 3, 5, 4, 9], [3, 5, 3, 9, 0]]
+
+def checkLeft(treerow, treecolumn, originalTreeHeight):
+    tally = 0
+    if treecolumn == 0:
+        pass
+    elif forest[treerow][treecolumn-1] <= originalTreeHeight:
+        tally += 1
+        if forest[treerow][treecolumn-1] < originalTreeHeight:
+            tally += checkLeft(treerow, treecolumn-1, originalTreeHeight)
+    elif forest[treerow][treecolumn-1] > originalTreeHeight:
+        tally += 1
+    return tally
+
+def checkRight(treerow, treecolumn, originalTreeHeight):
+    tally = 0
+    if treecolumn == len(forest[0])-1:
+        pass
+    elif forest[treerow][treecolumn+1] <= originalTreeHeight:
+        tally += 1
+        if forest[treerow][treecolumn+1] < originalTreeHeight:
+            tally += checkRight(treerow, treecolumn+1, originalTreeHeight)
+    elif forest[treerow][treecolumn+1] > originalTreeHeight:
+        tally += 1
+    return tally
+
+def checkBottom(treerow, treecolumn, originalTreeHeight):
+    tally = 0
+    if treerow == len(forest)-1:
+        pass
+    elif forest[treerow+1][treecolumn] <= originalTreeHeight:
+        tally += 1
+        if forest[treerow+1][treecolumn] < originalTreeHeight:
+            tally += checkBottom(treerow+1, treecolumn, originalTreeHeight)
+    elif forest[treerow+1][treecolumn] > originalTreeHeight:
+        tally += 1
+    return tally
+
+def checkTop(treerow, treecolumn, originalTreeHeight):
+    tally = 0
+    if treerow == 0:
+        pass
+    elif forest[treerow-1][treecolumn] <= originalTreeHeight:
+        tally += 1
+        if forest[treerow-1][treecolumn] < originalTreeHeight:
+            tally += checkTop(treerow-1, treecolumn, originalTreeHeight)
+    elif forest[treerow-1][treecolumn] > originalTreeHeight:
+        tally += 1
+    return tally
+# for every tree in the forest
+highestScore = 0
+for treerow in range(0, len(forest)):
+    for treecolumn in range(0, len(forest[treerow])):
+        currentTreeScore = 1;
+        currentTreeScore *= checkLeft(treerow, treecolumn, forest[treerow][treecolumn])
+        currentTreeScore *= checkRight(treerow, treecolumn, forest[treerow][treecolumn])
+        currentTreeScore *= checkTop(treerow, treecolumn, forest[treerow][treecolumn])
+        currentTreeScore *= checkBottom(treerow, treecolumn, forest[treerow][treecolumn])
+
+        if (currentTreeScore > highestScore):
+            highestScore = currentTreeScore
+
+print(highestScore)
