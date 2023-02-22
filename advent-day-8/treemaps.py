@@ -1,8 +1,22 @@
 # to read the input file
-inputFile = open('tree-input-pallavi.txt', 'r')
-inputFileLines = inputFile.readlines()
 
-forest = [[3, 0, 3, 7, 3], [2, 5, 5, 1, 2], [6, 5, 3, 3, 2], [3, 3, 5, 4, 9], [3, 5, 3, 9, 0]]
+forest = []
+def lineToArrayOfInt(str):
+    arr = []
+    for character in str:
+      # convert character to integer
+      i = int(character)
+      # append integer to array
+      arr.append(i)
+    return arr
+
+# for each line in the file
+for line in open('tree-input-jeff.txt', 'r').readlines():
+  # Convert line to an array of single digit integers
+  arrayOfInt = lineToArrayOfInt(line.strip())
+  # Add array of single digit integers to forest
+  forest.append(arrayOfInt)
+
 tally = 0
 
 def isvisiblefromtop(treerow, treecolumn):
