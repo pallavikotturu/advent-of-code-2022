@@ -11,11 +11,11 @@
 # what datastructure to use for representing head and tail?
 head = [0, 0]
 tail = [0, 0]
-record_of_tail = [[0,0]]
+record_of_tail = [[0, 0]]
 
 # how to capture positions that tail has visited?
 
-sample_instructions = """R 4
+sample_instructions = """ R 4
 U 4
 L 3
 D 1
