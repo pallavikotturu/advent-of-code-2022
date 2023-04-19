@@ -3,8 +3,6 @@
 
 clock = 0
 register = 1
-sum = 0
-
 def noop():
     print("noop")
 
@@ -12,21 +10,26 @@ def noop():
 def addx(param):
     print(param)
 
+def next_clock():
+    global clock
 
-for line in open('input-jeff.txt', 'r').readlines():
+    if clock % 40 == 0:
+        clock = 0
+        print()
+
+    if register == clock or clock == register -1 or clock == register +1:
+        print("#", end="")
+    else:
+        print(".", end="")
+
+    clock += 1
+
+for line in open('input-pallavi.txt', 'r').readlines():
     line = line.strip()
     if "noop" == line:
-        clock += 1
-        if clock in (20, 60, 100, 140, 180, 220):
-                sum += clock * register
+        next_clock()
     elif line.startswith("addx"):
         (cmd, param) = line.split(" ")
-        clock += 1
-        if clock in (20, 60, 100, 140, 180, 220):
-            sum += clock * register
-        clock += 1
-        if clock in (20, 60, 100, 140, 180, 220):
-            sum += clock * register
+        next_clock()
+        next_clock()
         register += int(param)
-
-print(sum)
