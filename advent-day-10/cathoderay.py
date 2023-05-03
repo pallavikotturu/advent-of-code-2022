@@ -3,6 +3,12 @@
 
 clock = 0
 register = 1
+
+
+def print(param):
+    pass
+
+
 def noop():
     print("noop")
 
@@ -15,12 +21,12 @@ def next_clock():
 
     if clock % 40 == 0:
         clock = 0
-        print()
+        print('')
 
     if register == clock or clock == register -1 or clock == register +1:
-        print("#", end="")
+        print("#")
     else:
-        print(".", end="")
+        print(".")
 
     clock += 1
 
